@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(git push:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git checkout --:*)",
+      "Bash(rm -rf:*)",
+      "Read(./backend/.env)",
+      "Read(./.env)"
+    ],
+    "allow": [
+      "Bash(npm run verify:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run test:*)"
+    ]
+  }
+}

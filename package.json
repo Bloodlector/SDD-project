@@ -1,0 +1,25 @@
+{
+  "name": "app",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "backend",
+    "frontend",
+    "packages/shared"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "verify": "npm run lint --workspaces --if-present && npm run typecheck --workspaces --if-present && npm run test --workspaces --if-present",
+    "dev:backend": "npm run dev --workspace backend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "db:migrate": "npm run db:migrate --workspace backend"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.0.0",
+    "prettier": "^3.3.0"
+  }
+}
