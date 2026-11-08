@@ -27,7 +27,7 @@ export function Auth() {
   const [isRegisterHovered, setIsRegisterHovered] = useState(false);
   const [isRegisterCloseHovered, setIsRegisterCloseHovered] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
@@ -43,7 +43,7 @@ export function Auth() {
     setIsLoading(false);
   };
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
@@ -93,8 +93,8 @@ export function Auth() {
             cursor: "pointer",
             zIndex: 1001,
           }}
-          onMouseEnter={() => setIsCloseHovered(true)}
-          onMouseLeave={() => setIsCloseHovered(false)}
+          onMouseEnter={() => { setIsCloseHovered(true); }}
+          onMouseLeave={() => { setIsCloseHovered(false); }}
           onClick={handleLogout}
         >
           Выйти
@@ -159,7 +159,9 @@ export function Auth() {
       >
         <h2 style={{ margin: "0 0 20px", color: FB_BLUE }}>Авторизация</h2>
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={(e) => {
+          handleLogin(e).catch(() => {});
+        }}>
           <div style={{ marginBottom: 16, textAlign: "left" }}>
             <label
               style={{
@@ -174,7 +176,7 @@ export function Auth() {
             <input
               type="text"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => { setUsername(e.target.value); }}
               required
               style={{
                 width: "100%",
@@ -185,8 +187,8 @@ export function Auth() {
                 boxSizing: "border-box",
                 outline: "none",
               }}
-              onFocus={(e) => (e.target.style.borderColor = FB_BLUE)}
-              onBlur={(e) => (e.target.style.borderColor = "#ddd")}
+              onFocus={(e) => { e.target.style.borderColor = FB_BLUE; }}
+              onBlur={(e) => { e.target.style.borderColor = "#ddd"; }}
             />
           </div>
 
@@ -204,7 +206,7 @@ export function Auth() {
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => { setPassword(e.target.value); }}
               required
               style={{
                 width: "100%",
@@ -215,8 +217,8 @@ export function Auth() {
                 boxSizing: "border-box",
                 outline: "none",
               }}
-              onFocus={(e) => (e.target.style.borderColor = FB_BLUE)}
-              onBlur={(e) => (e.target.style.borderColor = "#ddd")}
+              onFocus={(e) => { e.target.style.borderColor = FB_BLUE; }}
+              onBlur={(e) => { e.target.style.borderColor = "#ddd"; }}
             />
           </div>
 
@@ -250,8 +252,8 @@ export function Auth() {
               cursor: isLoading ? "not-allowed" : "pointer",
               opacity: isLoading ? 0.7 : 1,
             }}
-            onMouseEnter={() => setIsButtonHovered(true)}
-            onMouseLeave={() => setIsButtonHovered(false)}
+            onMouseEnter={() => { setIsButtonHovered(true); }}
+            onMouseLeave={() => { setIsButtonHovered(false); }}
           >
             {isLoading ? "Вход..." : "Войти"}
           </button>
@@ -279,8 +281,8 @@ export function Auth() {
               fontWeight: 600,
               padding: 0,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-            onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+            onMouseEnter={(e) => { e.currentTarget.style.textDecoration = "underline"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.textDecoration = "none"; }}
           >
             Зарегистрироваться
           </button>
@@ -313,11 +315,13 @@ export function Auth() {
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1)",
               textAlign: "center",
             }}
-            onClick={(event) => event.stopPropagation()}
+            onClick={(event) => { event.stopPropagation(); }}
           >
             <h2 style={{ margin: "0 0 20px", color: FB_BLUE }}>Регистрация</h2>
 
-            <form onSubmit={handleRegister}>
+            <form onSubmit={(e) => {
+              handleRegister(e).catch(() => {});
+            }}>
               <div style={{ marginBottom: 16, textAlign: "left" }}>
                 <label
                   style={{
@@ -332,7 +336,7 @@ export function Auth() {
                 <input
                   type="text"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => { setUsername(e.target.value); }}
                   required
                   minLength={3}
                   style={{
@@ -344,8 +348,8 @@ export function Auth() {
                     boxSizing: "border-box",
                     outline: "none",
                   }}
-                  onFocus={(e) => (e.target.style.borderColor = FB_BLUE)}
-                  onBlur={(e) => (e.target.style.borderColor = "#ddd")}
+                  onFocus={(e) => { e.target.style.borderColor = FB_BLUE; }}
+                  onBlur={(e) => { e.target.style.borderColor = "#ddd"; }}
                 />
               </div>
 
@@ -363,7 +367,7 @@ export function Auth() {
                 <input
                   type="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => { setPassword(e.target.value); }}
                   required
                   minLength={6}
                   style={{
@@ -375,8 +379,8 @@ export function Auth() {
                     boxSizing: "border-box",
                     outline: "none",
                   }}
-                  onFocus={(e) => (e.target.style.borderColor = FB_BLUE)}
-                  onBlur={(e) => (e.target.style.borderColor = "#ddd")}
+                  onFocus={(e) => { e.target.style.borderColor = FB_BLUE; }}
+                  onBlur={(e) => { e.target.style.borderColor = "#ddd"; }}
                 />
               </div>
 
@@ -410,8 +414,8 @@ export function Auth() {
                   cursor: isLoading ? "not-allowed" : "pointer",
                   opacity: isLoading ? 0.7 : 1,
                 }}
-                onMouseEnter={() => setIsRegisterHovered(true)}
-                onMouseLeave={() => setIsRegisterHovered(false)}
+                onMouseEnter={() => { setIsRegisterHovered(true); }}
+                onMouseLeave={() => { setIsRegisterHovered(false); }}
               >
                 {isLoading ? "Регистрация..." : "Зарегистрироваться"}
               </button>
@@ -434,8 +438,8 @@ export function Auth() {
                   fontWeight: 700,
                   cursor: "pointer",
                 }}
-                onMouseEnter={() => setIsRegisterCloseHovered(true)}
-                onMouseLeave={() => setIsRegisterCloseHovered(false)}
+                onMouseEnter={() => { setIsRegisterCloseHovered(true); }}
+                onMouseLeave={() => { setIsRegisterCloseHovered(false); }}
               >
                 Закрыть
               </button>
