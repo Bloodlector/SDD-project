@@ -2,7 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { registerSchema, loginSchema } from "./schemas.js";
 import { register, login } from "./service.js";
 
-export async function authRoutes(server: FastifyInstance) {
+export function authRoutes(server: FastifyInstance) {
   server.post("/api/auth/register", async (request, reply) => {
     const body = registerSchema.parse(request.body);
     const user = await register(body.username, body.password);

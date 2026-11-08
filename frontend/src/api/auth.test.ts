@@ -1,8 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { login, register } from "./auth.js";
 
-const originalFetch = globalThis.fetch;
-
 describe("auth API", () => {
   beforeEach(() => {
     vi.spyOn(globalThis, "fetch").mockImplementation(
