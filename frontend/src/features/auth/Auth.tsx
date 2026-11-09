@@ -136,8 +136,8 @@ export function Auth() {
                 alignItems: "center",
                 gap: 6,
               }}
-              onMouseEnter={() => setIsProfileHovered(true)}
-              onMouseLeave={() => setIsProfileHovered(false)}
+              onMouseEnter={() => { setIsProfileHovered(true); }}
+              onMouseLeave={() => { setIsProfileHovered(false); }}
               onClick={() => {}}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -158,8 +158,8 @@ export function Auth() {
                 fontWeight: 600,
                 cursor: "pointer",
               }}
-              onMouseEnter={() => setIsCloseHovered(true)}
-              onMouseLeave={() => setIsCloseHovered(false)}
+              onMouseEnter={() => { setIsCloseHovered(true); }}
+              onMouseLeave={() => { setIsCloseHovered(false); }}
               onClick={handleLogout}
             >
               Выйти
