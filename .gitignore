@@ -10,3 +10,4 @@ backend/prisma/migrations/**/migration_lock.toml.bak
 coverage/
 .vite/
 backend/generated/
+.mcp.json
