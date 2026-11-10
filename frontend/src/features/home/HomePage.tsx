@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { FB_BACKGROUND, FB_BLUE, FB_TEXT } from "../auth/Auth";
+import { FB_BACKGROUND, FB_BLUE, FB_TEXT } from "../../styles/palette";
 import { HEADER_HEIGHT, HomeHeader } from "./HomeHeader";
 import { HomeSidebar, SIDEBAR_WIDTH } from "./HomeSidebar";
 

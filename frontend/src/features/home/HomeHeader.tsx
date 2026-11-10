@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { CSSProperties } from "react";
-import { FB_BLUE, FB_TEXT } from "../auth/Auth";
+import { FB_BLUE, FB_TEXT } from "../../styles/palette";
 
 export const HEADER_HEIGHT = 56;
 

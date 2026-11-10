@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { FB_BLUE } from "../auth/Auth";
+import { FB_BLUE } from "../../styles/palette";
 import { HEADER_HEIGHT } from "./HomeHeader";
 import { MenuItem } from "./MenuItem";
 

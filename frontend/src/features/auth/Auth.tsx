@@ -3,11 +3,7 @@ import type { CSSProperties } from "react";
 import { login, register } from "../../api/auth.js";
 import { Cat } from "../../components/Cat";
 import { HomePage } from "../home/HomePage";
-
-export const FB_BLUE = "#1877F2";
-export const FB_BLUE_DARK = "#166FE5";
-export const FB_BACKGROUND = "#F0F2F5";
-export const FB_TEXT = "#1C1E21";
+import { FB_BLUE, FB_BLUE_DARK, FB_BACKGROUND, FB_TEXT } from "../../styles/palette";
 
 interface AuthState {
   isAuthenticated: boolean;

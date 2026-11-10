@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FB_TEXT } from "../auth/Auth";
+import { FB_TEXT } from "../../styles/palette";
 
 interface MenuItemProps {
   label: string;
