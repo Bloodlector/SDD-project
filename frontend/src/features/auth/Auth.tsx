@@ -1,16 +1,27 @@
 import { useState } from "react";
+import type { CSSProperties } from "react";
 import { login, register } from "../../api/auth.js";
 import { Cat } from "../../components/Cat";
+import { HomePage } from "../home/HomePage";
 
-const FB_BLUE = "#1877F2";
-const FB_BLUE_DARK = "#166FE5";
-const FB_BACKGROUND = "#F0F2F5";
-const FB_TEXT = "#1C1E21";
+export const FB_BLUE = "#1877F2";
+export const FB_BLUE_DARK = "#166FE5";
+export const FB_BACKGROUND = "#F0F2F5";
+export const FB_TEXT = "#1C1E21";
 
 interface AuthState {
   isAuthenticated: boolean;
   username: string | null;
 }
+
+// Слой кота: поверх шапки и меню (zIndex 2000 > 100). Клики проходят сквозь слой.
+// Внутри Cat: bowlStyle zIndex 999, catStyle zIndex 1000, оба pointerEvents "none".
+const catLayerStyle: CSSProperties = {
+  position: "fixed",
+  inset: 0,
+  zIndex: 2000,
+  pointerEvents: "none",
+};
 
 export function Auth() {
   const [authState, setAuthState] = useState<AuthState>({
@@ -23,7 +34,6 @@ export function Auth() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
-  const [isCloseHovered, setIsCloseHovered] = useState(false);
   const [isRegisterHovered, setIsRegisterHovered] = useState(false);
   const [isRegisterCloseHovered, setIsRegisterCloseHovered] = useState(false);
   const [isProfileHovered, setIsProfileHovered] = useState(false);
@@ -41,7 +51,7 @@ export function Auth() {
     if ("error" in result) {
       setError(result.error);
     } else {
-      setAuthState({ isAuthenticated: true, username });
+      setAuthState({ isAuthenticated: true, username: result.data.user.username });
     }
 
     setIsLoading(false);
@@ -73,175 +83,12 @@ export function Auth() {
   // Main screen after authentication
   if (authState.isAuthenticated) {
     return (
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          background: FB_BACKGROUND,
-          fontFamily: "Helvetica, Arial, sans-serif",
-        }}
-      >
-        {/* Top bar */}
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 56,
-            background: "#FFFFFF",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "0 16px",
-            zIndex: 1000,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: "50%",
-                background: FB_BLUE,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#FFFFFF",
-                fontWeight: 700,
-                fontSize: 20,
-              }}
-            >
-              A
-            </div>
-            <span style={{ fontSize: 22, fontWeight: 700, color: FB_BLUE }}>
-              App
-            </span>
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <button
-              type="button"
-              style={{
-                padding: "8px 16px",
-                border: "none",
-                borderRadius: 6,
-                background: isProfileHovered ? "#E4E6E9" : "#F0F2F5",
-                color: FB_TEXT,
-                fontSize: 15,
-                fontWeight: 600,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-              onMouseEnter={() => { setIsProfileHovered(true); }}
-              onMouseLeave={() => { setIsProfileHovered(false); }}
-              onClick={() => {}}
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                <circle cx="8" cy="5" r="3.5" />
-                <path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" />
-              </svg>
-              Профиль
-            </button>
-            <button
-              type="button"
-              style={{
-                padding: "8px 16px",
-                border: "none",
-                borderRadius: 6,
-                background: isCloseHovered ? FB_BLUE_DARK : FB_BLUE,
-                color: "#FFFFFF",
-                fontSize: 15,
-                fontWeight: 600,
-                cursor: "pointer",
-              }}
-              onMouseEnter={() => { setIsCloseHovered(true); }}
-              onMouseLeave={() => { setIsCloseHovered(false); }}
-              onClick={handleLogout}
-            >
-              Выйти
-            </button>
-          </div>
+      <>
+        <HomePage username={authState.username} onLogout={handleLogout} />
+        <div style={catLayerStyle} aria-hidden="true">
+          <Cat />
         </div>
-
-        {/* Left sidebar */}
-        <div
-          style={{
-            position: "fixed",
-            top: 56,
-            left: 0,
-            bottom: 0,
-            width: 240,
-            background: "#FFFFFF",
-            borderRight: "1px solid #E4E6E9",
-            padding: "16px 8px",
-            zIndex: 999,
-            overflowY: "auto",
-          }}
-        >
-          <nav>
-            {menuItems.map((item) => (
-              <button
-                key={item}
-                type="button"
-                onClick={() => { setActiveMenu(item); }}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  padding: "10px 12px",
-                  border: "none",
-                  borderRadius: 8,
-                  background: activeMenu === item ? "#E7F3FF" : "transparent",
-                  color: activeMenu === item ? FB_BLUE : FB_TEXT,
-                  fontSize: 15,
-                  fontWeight: activeMenu === item ? 600 : 400,
-                  cursor: "pointer",
-                  textAlign: "left",
-                  marginBottom: 2,
-                }}
-              >
-                {item}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Main content */}
-        <div
-          style={{
-            position: "fixed",
-            top: 56,
-            left: 240,
-            right: 0,
-            bottom: 0,
-            padding: 24,
-            overflowY: "auto",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 680,
-              margin: "0 auto",
-              background: "#FFFFFF",
-              borderRadius: 8,
-              boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
-              padding: 24,
-            }}
-          >
-            <h2 style={{ margin: "0 0 16px", color: FB_TEXT, fontSize: 24 }}>
-              {activeMenu}
-            </h2>
-            <p style={{ margin: 0, color: "#65676B", fontSize: 16 }}>
-              Раздел &laquo;{activeMenu}&raquo; — в разработке
-            </p>
-          </div>
-        </div>
-
-        <Cat />
-      </div>
+      </>
     );
   }
 
