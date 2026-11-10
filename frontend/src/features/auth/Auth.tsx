@@ -36,11 +36,6 @@ export function Auth() {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const [isRegisterHovered, setIsRegisterHovered] = useState(false);
   const [isRegisterCloseHovered, setIsRegisterCloseHovered] = useState(false);
-  const [isProfileHovered, setIsProfileHovered] = useState(false);
-  const [activeMenu, setActiveMenu] = useState("Главная");
-
-  const menuItems = ["Главная", "Новости", "Сообщения", "Друзья", "Настройки"];
-
   const handleLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setError("");

@@ -74,13 +74,13 @@ export function HomeHeader({ username }: HomeHeaderProps) {
           cursor: "pointer",
           border: "none",
         }}
-        onMouseEnter={() => setIsHovered(true)}
+        onMouseEnter={() => { setIsHovered(true); }}
         onMouseLeave={() => {
           setIsHovered(false);
           setIsPressed(false);
         }}
-        onMouseDown={() => setIsPressed(true)}
-        onMouseUp={() => setIsPressed(false)}
+        onMouseDown={() => { setIsPressed(true); }}
+        onMouseUp={() => { setIsPressed(false); }}
       >
         {initial ?? <span aria-hidden="true">●</span>}
       </button>
