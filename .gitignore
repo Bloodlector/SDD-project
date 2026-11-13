@@ -11,3 +11,5 @@ coverage/
 .vite/
 backend/generated/
 .mcp.json
+gigacode_vsc/gigacode.json
+.vscode/mcp.json
