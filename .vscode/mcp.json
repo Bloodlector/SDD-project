@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "taktline": {
+      "type": "http",
+      "url": "https://ai.taktline.ru/mcp",
+      "headers": {
+        "Authorization": "Bearer mcp_2651311a906489cca73a2fa9e5d9201c6598a7634b4fc9065a60f15b84ed27d7"
+      },
+      "timeout": 30000
+    }
+  }
+}
