@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { FB_BACKGROUND, FB_BLUE, FB_TEXT } from "../../styles/palette";
 import { HEADER_HEIGHT, HomeHeader } from "./HomeHeader";
 import { HomeSidebar, SIDEBAR_WIDTH } from "./HomeSidebar";
+import { RecordForm } from "../records/RecordForm";
 
 interface HomePageProps {
   username: string | null;
@@ -16,13 +17,13 @@ const mainStyle: CSSProperties = {
   bottom: 0,
   overflow: "auto",
   display: "flex",
+  flexDirection: "column",
   alignItems: "center",
-  justifyContent: "center",
   padding: 24,
   boxSizing: "border-box",
+  gap: 24,
 };
 
-// Ширина карточки: width 100% и maxWidth 400. minWidth 0 не даёт min-width перебить max-width.
 const greetingCardStyle: CSSProperties = {
   width: "100%",
   maxWidth: 400,
@@ -37,7 +38,6 @@ const greetingCardStyle: CSSProperties = {
 };
 
 export function HomePage({ username, onLogout }: HomePageProps) {
-  // Имя обрезается один раз; дальше используется только готовое значение.
   const trimmed = username?.trim() ?? "";
   const hasName = trimmed !== "";
 
@@ -59,6 +59,7 @@ export function HomePage({ username, onLogout }: HomePageProps) {
           </h1>
           <p style={{ margin: 0, color: "#65676B" }}>Вы успешно авторизовались в системе</p>
         </div>
+        <RecordForm />
       </main>
     </div>
   );

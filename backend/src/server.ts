@@ -1,20 +1,10 @@
 import Fastify from "fastify";
 import { app } from "./app.js";
-import { AppError } from "./lib/errors.js";
+import { errorHandler } from "./lib/error-handler.js";
 
-const server = Fastify({ logger: true });
+const server = Fastify({ logger: true, bodyLimit: 16384 });
 
-server.setErrorHandler((err: unknown, _req, reply) => {
-  if (err instanceof AppError) {
-    return reply
-      .status(err.statusCode)
-      .send({ code: err.code, message: err.message });
-  }
-  server.log.error(err);
-  return reply
-    .status(500)
-    .send({ code: "internal", message: "Internal error" });
-});
+server.setErrorHandler(errorHandler);
 
 await server.register(app);
 await server.listen({

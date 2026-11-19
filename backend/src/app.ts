@@ -1,6 +1,8 @@
 import type { FastifyInstance } from "fastify";
 import fastifyCors from "@fastify/cors";
 import { authRoutes } from "./modules/auth/routes.js";
+import { recordsRoutes } from "./modules/records/routes.js";
+import { disconnectKafka } from "./lib/kafka.js";
 
 export async function app(server: FastifyInstance): Promise<void> {
   // Enable CORS for frontend
@@ -9,7 +11,15 @@ export async function app(server: FastifyInstance): Promise<void> {
   });
 
   server.get("/health", () => ({ status: "ok" }));
-  
+
   // Register auth routes
   await server.register(authRoutes);
+
+  // Register records routes
+  await server.register(recordsRoutes);
+
+  // Cleanup Kafka on shutdown
+  server.addHook("onClose", async () => {
+    await disconnectKafka();
+  });
 }
