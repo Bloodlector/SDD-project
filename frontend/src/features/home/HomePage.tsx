@@ -3,6 +3,7 @@ import { FB_BACKGROUND, FB_BLUE, FB_TEXT } from "../../styles/palette";
 import { HEADER_HEIGHT, HomeHeader } from "./HomeHeader";
 import { HomeSidebar, SIDEBAR_WIDTH } from "./HomeSidebar";
 import { RecordForm } from "../records/RecordForm";
+import { MessagesPanel } from "../messages/MessagesPanel";
 
 interface HomePageProps {
   username: string | null;
@@ -15,19 +16,31 @@ const mainStyle: CSSProperties = {
   left: SIDEBAR_WIDTH,
   right: 0,
   bottom: 0,
-  overflow: "auto",
+  overflow: "hidden",
+  display: "flex",
+  flexDirection: "row",
+  gap: 24,
+  padding: 24,
+  boxSizing: "border-box",
+};
+
+const leftPanelStyle: CSSProperties = {
+  flex: "0 0 400px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  padding: 24,
-  boxSizing: "border-box",
   gap: 24,
+  overflow: "auto",
+};
+
+const rightPanelStyle: CSSProperties = {
+  flex: "1 1 auto",
+  minWidth: 0,
+  overflow: "hidden",
 };
 
 const greetingCardStyle: CSSProperties = {
   width: "100%",
-  maxWidth: 400,
-  minWidth: 0,
   padding: 32,
   borderRadius: 8,
   background: "#FFFFFF",
@@ -53,13 +66,18 @@ export function HomePage({ username, onLogout }: HomePageProps) {
       <HomeHeader username={hasName ? trimmed : null} />
       <HomeSidebar onLogout={onLogout} />
       <main style={mainStyle}>
-        <div style={greetingCardStyle}>
-          <h1 style={{ margin: "0 0 16px", color: FB_BLUE, overflowWrap: "anywhere" }}>
-            {hasName ? `Добро пожаловать, ${trimmed}!` : "Добро пожаловать!"}
-          </h1>
-          <p style={{ margin: 0, color: "#65676B" }}>Вы успешно авторизовались в системе</p>
+        <div style={leftPanelStyle}>
+          <div style={greetingCardStyle}>
+            <h1 style={{ margin: "0 0 16px", color: FB_BLUE, overflowWrap: "anywhere" }}>
+              {hasName ? `Добро пожаловать, ${trimmed}!` : "Добро пожаловать!"}
+            </h1>
+            <p style={{ margin: 0, color: "#65676B" }}>Вы успешно авторизовались в системе</p>
+          </div>
+          <RecordForm />
         </div>
-        <RecordForm />
+        <div style={rightPanelStyle}>
+          <MessagesPanel />
+        </div>
       </main>
     </div>
   );

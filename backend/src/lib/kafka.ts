@@ -17,6 +17,8 @@ function createKafka(): Kafka {
   });
 }
 
+export { createKafka };
+
 export async function getProducer(): Promise<ReturnType<Kafka["producer"]>> {
   if (producerInstance) {
     return producerInstance;

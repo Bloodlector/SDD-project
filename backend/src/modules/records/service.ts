@@ -9,10 +9,12 @@ export interface RecordDto {
 }
 
 export async function createRecord(input: CreateRecordInput): Promise<RecordDto> {
+  const now = new Date().toISOString();
   const record: RecordDto = {
     id: randomUUID(),
     name: input.name,
     description: input.description,
+    timestamp: now,
   };
 
   await publishRecord(record);
