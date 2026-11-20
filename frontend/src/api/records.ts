@@ -4,6 +4,7 @@ export interface CreateRecordInput {
   id: string;
   name: string;
   description: string;
+  timestamp?: string;
 }
 
 export interface CreateRecordResponse {
@@ -12,6 +13,7 @@ export interface CreateRecordResponse {
     id: string;
     name: string;
     description: string;
+    timestamp?: string;
   };
 }
 

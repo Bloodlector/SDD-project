@@ -90,14 +90,18 @@ export function RecordForm() {
   return (
     <div style={cardStyle}>
       <h2 style={{ margin: "0 0 16px", color: FB_BLUE }}>Отправить запись</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => {
+        void handleSubmit(e);
+      }}>
         <label>
           Название:
           <input
             ref={nameRef}
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
             onKeyDown={handleKeyDown}
             style={inputStyle}
             placeholder="Введите название"
@@ -114,7 +118,9 @@ export function RecordForm() {
           Описание:
           <textarea
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
             onKeyDown={handleKeyDown}
             style={{ ...inputStyle, minHeight: 60, resize: "vertical" }}
             placeholder="Введите описание"

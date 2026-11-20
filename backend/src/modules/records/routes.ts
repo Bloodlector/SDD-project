@@ -6,7 +6,7 @@ export function recordsRoutes(server: FastifyInstance) {
   server.post(
     "/api/records",
     {
-      preValidation: async (request, reply) => {
+      preValidation: async (_request, _reply) => {
         // bodyLimit is set on the route options below
       },
     },

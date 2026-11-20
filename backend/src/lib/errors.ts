@@ -28,10 +28,8 @@ export class UnauthorizedError extends AppError {
 }
 
 export class ServiceUnavailableError extends AppError {
-  constructor(reason: string) {
+  constructor(_reason: string) {
     super(503, "broker_unavailable", "Сервис временно недоступен");
     this.name = "ServiceUnavailableError";
-    // reason используется только для логирования, не попадает в ответ клиенту
-    void reason;
   }
 }

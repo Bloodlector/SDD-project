@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { createRecord, RecordDto } from "./service.js";
+import { createRecord } from "./service.js";
 import * as repository from "./repository.js";
 
 vi.mock("./repository.js", () => ({
@@ -18,7 +18,7 @@ describe("createRecord", () => {
   });
 
   it("generates record with UUID and publishes", async () => {
-    const mockId = "mock-uuid-123";
+    const mockId = "a1b2c3d4-e5f6-7890-abcd-ef1234567890";
     vi.mocked(randomUUID).mockReturnValue(mockId);
     vi.mocked(repository.publishRecord).mockResolvedValue(undefined);
 
@@ -33,10 +33,10 @@ describe("createRecord", () => {
         description: "Desc",
       }),
     );
-    expect(result).toEqual<RecordDto>({
-      id: mockId,
-      name: "Test",
-      description: "Desc",
-    });
+    expect(result.id).toBe(mockId);
+    expect(result.name).toBe("Test");
+    expect(result.description).toBe("Desc");
+    expect(result.timestamp).toBeDefined();
+    expect(typeof result.timestamp).toBe("string");
   });
 });
