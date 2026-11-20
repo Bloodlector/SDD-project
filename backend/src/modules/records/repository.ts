@@ -7,7 +7,7 @@ export async function publishRecord(record: CreateRecordInput): Promise<void> {
     const producer = await getProducer();
     await producer.send({
       topic: KAFKA_TOPIC,
-      messages: [{ key: record.id, value: record }],
+      messages: [{ key: record.id, value: JSON.stringify(record) }],
     });
   } catch (err) {
     throw new ServiceUnavailableError("Не удалось подключиться к Kafka");

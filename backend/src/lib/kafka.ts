@@ -23,14 +23,13 @@ export async function getProducer(): Promise<ReturnType<Kafka["producer"]>> {
   }
 
   if (!connecting) {
-    connecting = createKafka()
-      .producer()
-      .connect()
-      .then((prod) => {
-        producerInstance = prod;
-        connecting = null;
-        return prod;
-      });
+    connecting = (async () => {
+      const prod = createKafka().producer();
+      await prod.connect();
+      producerInstance = prod;
+      connecting = null;
+      return prod;
+    })();
   }
 
   return connecting;
