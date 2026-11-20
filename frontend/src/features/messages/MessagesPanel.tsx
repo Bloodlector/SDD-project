@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { CSSProperties } from "react";
-import { FB_BLUE, FB_TEXT } from "../../styles/palette";
+import { FB_BLUE } from "../../styles/palette";
 import { MessageCard } from "./MessageCard";
 import { useMessagesFeed } from "./useMessagesFeed";
 
@@ -122,7 +122,9 @@ export function MessagesPanel() {
         }}
       >
         <button
-          onClick={() => setShowOnlyNew(!showOnlyNew)}
+          onClick={() => {
+            setShowOnlyNew(!showOnlyNew);
+          }}
           style={{
             padding: "4px 12px",
             fontSize: 12,

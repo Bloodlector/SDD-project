@@ -9,7 +9,7 @@ export async function publishRecord(record: RecordDto): Promise<void> {
       topic: KAFKA_TOPIC,
       messages: [{ key: record.id, value: JSON.stringify(record) }],
     });
-  } catch (err) {
+  } catch {
     throw new ServiceUnavailableError("Не удалось подключиться к Kafka");
   }
 }

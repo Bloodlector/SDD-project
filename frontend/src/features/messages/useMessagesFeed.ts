@@ -14,7 +14,7 @@ export function useMessagesFeed() {
 
     eventSource.onmessage = (event) => {
       try {
-        const data = JSON.parse(event.data) as MessageDto[];
+        const data = JSON.parse(event.data as string) as MessageDto[];
         setMessages(data);
         setError(null);
         errorRef.current = null;

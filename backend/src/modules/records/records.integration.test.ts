@@ -2,12 +2,14 @@ import { describe, it, expect, beforeAll, afterAll } from "vitest";
 
 const KAFKA_BROKERS = process.env.KAFKA_BROKERS;
 
-// Skip integration tests if Kafka is not available
-const skipIfNoKafka = !KAFKA_BROKERS ? test.skip : test;
+interface RecordApiResponse {
+  message: string;
+  record?: {
+    name: string;
+  };
+}
 
 describe.skipIf(!KAFKA_BROKERS)("records integration", () => {
-  let serverProcess: any;
-
   beforeAll(async () => {
     // Start the server for integration tests
     // This requires KAFKA_BROKERS to be set
@@ -17,7 +19,7 @@ describe.skipIf(!KAFKA_BROKERS)("records integration", () => {
     // Cleanup
   });
 
-  skipIfNoKafka("POST /api/records returns 201", async () => {
+  it("POST /api/records returns 201", async () => {
     const response = await fetch("http://localhost:3000/api/records", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -29,13 +31,13 @@ describe.skipIf(!KAFKA_BROKERS)("records integration", () => {
     });
 
     expect(response.status).toBe(201);
-    const data = await response.json();
+    const data = (await response.json()) as RecordApiResponse;
     expect(data.message).toBe("Запись отправлена");
     expect(data.record).toBeDefined();
-    expect(data.record.name).toBe("Test Record");
+    expect(data.record?.name).toBe("Test Record");
   });
 
-  skipIfNoKafka("POST /api/records with empty name returns 400", async () => {
+  it("POST /api/records with empty name returns 400", async () => {
     const response = await fetch("http://localhost:3000/api/records", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

@@ -1,18 +1,4 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import * as kafkajs from "kafkajs";
-
-// Mock kafkajs
-const mockProducer = {
-  connect: vi.fn().mockResolvedValue(undefined),
-  disconnect: vi.fn().mockResolvedValue(undefined),
-  send: vi.fn().mockResolvedValue(undefined),
-};
-
-vi.mock("kafkajs", () => ({
-  Kafka: vi.fn().mockImplementation(() => ({
-    producer: () => mockProducer,
-  })),
-}));
 
 // Clear module cache between tests
 vi.doUnmock("kafkajs");

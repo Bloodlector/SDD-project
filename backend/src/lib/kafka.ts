@@ -13,7 +13,6 @@ function createKafka(): Kafka {
     connectionTimeout: 3000,
     requestTimeout: 5000,
     retry: { retries: 0 },
-    allowAutoTopicCreation: false,
   });
 }
 

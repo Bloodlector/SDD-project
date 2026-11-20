@@ -2,8 +2,6 @@ import { describe, it, expect } from "vitest";
 
 const KAFKA_BROKERS = process.env.KAFKA_BROKERS;
 
-const skipIfNoKafka = !KAFKA_BROKERS ? test.skip : test;
-
 describe.skipIf(!KAFKA_BROKERS)("messages integration", () => {
   it("GET /api/messages returns array", async () => {
     const response = await fetch("http://localhost:3000/api/messages");

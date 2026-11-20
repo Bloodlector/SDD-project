@@ -6,6 +6,7 @@ export interface RecordDto {
   id: string;
   name: string;
   description: string;
+  timestamp?: string;
 }
 
 export async function createRecord(input: CreateRecordInput): Promise<RecordDto> {

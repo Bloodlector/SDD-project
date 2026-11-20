@@ -1,13 +1,13 @@
 import type { MessageDto } from "./schemas.js";
-import { getProducer, createKafka, KAFKA_TOPIC } from "../../lib/kafka.js";
+import { createKafka, KAFKA_TOPIC } from "../../lib/kafka.js";
 
 // Buffer for consumed messages
 const BUFFER_SIZE = 500;
 const messageBuffer: MessageDto[] = [];
 const seenIds = new Set<string>();
 
-let consumerInstance: ReturnType<Kafka["consumer"]> | null = null;
-let consumerConnecting: Promise<ReturnType<Kafka["consumer"]>> | null = null;
+let consumerInstance: { disconnect: () => Promise<void> } | null = null;
+let consumerConnecting: Promise<void> | null = null;
 
 export function getBuffer(): MessageDto[] {
   return [...messageBuffer];
@@ -32,20 +32,26 @@ export async function startMessagesConsumer(): Promise<void> {
       await consumer.connect();
       await consumer.subscribe({ topic: KAFKA_TOPIC, fromBeginning: true });
 
-      consumer.run({
+      void consumer.run({
         autoCommit: false,
-        eachMessage: async ({ topic, partition, message }) => {
+        eachMessage: async ({ message }) => {
           if (!message.value) return;
           try {
-            const parsed = JSON.parse(message.value.toString());
+            const parsed = JSON.parse(message.value.toString()) as {
+              id?: string;
+              name?: string;
+              description?: string;
+              timestamp?: string;
+            };
             addMessage({
-              id: parsed.id ?? message.key?.toString() ?? `msg-${Date.now()}`,
+              id: parsed.id ?? message.key?.toString() ?? `msg-${String(Date.now())}`,
               name: parsed.name ?? "",
               description: parsed.description ?? "",
               timestamp: parsed.timestamp ?? new Date().toISOString(),
             });
           } catch {
             // ignore parse errors
+            await Promise.resolve();
           }
         },
       });

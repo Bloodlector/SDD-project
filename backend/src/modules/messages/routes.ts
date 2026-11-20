@@ -1,4 +1,4 @@
-import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyInstance } from "fastify";
 import { getMessages } from "./service.js";
 import { startMessagesConsumer } from "./repository.js";
 
@@ -20,7 +20,7 @@ export function messagesRoutes(server: FastifyInstance) {
   });
 
   // SSE endpoint for real-time updates
-  server.get("/api/messages/stream", async (_request: FastifyRequest, reply: FastifyReply) => {
+  server.get("/api/messages/stream", async (_request, reply) => {
     if (!consumerStarted) {
       consumerStarted = true;
       try {
